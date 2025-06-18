@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Scrolling Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .ticker-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 30s linear infinite;
+    }
+
+    .ticker img {
+      height: 150px; /* scale as needed */
+      vertical-align: top;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ticker-wrapper">
+    <div class="ticker">
+      <img src="ASGAARD SUB FOLLOW CHEER.png" alt="Scrolling Categories">
+    </div>
+  </div>
+</body>
+</html>
