@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WindieStink Overlay - Wide Spacing</title>
+    <style>
+        @font-face {
+            font-family: 'Asgaard';
+            src: url('Asgaard-Full.otf') format('opentype');
+        }
+
+        body {
+            margin: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .ticker-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 80px;
+        }
+
+        .ticker-track {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+            font-family: 'Asgaard', sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            color: #0032FF;
+        }
+
+        .label-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 200px;
+            text-align: center;
+        }
+
+        .label-title {
+            letter-spacing: 6px;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticker-wrapper">
+        <div class="ticker-track" id="ticker">
+            <div class="label-block">
+                <div class="label-title" id="follower">LATEST FOLLOWER: Loading...</div>
+            </div>
+            <div class="label-block">
+                <div class="label-title" id="sub">LATEST SUB: Loading...</div>
+            </div>
+            <div class="label-block">
+                <div class="label-title" id="cheer">LATEST CHEER: Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function updateTicker() {
+            try {
+                const response = await fetch("/data");
+                const text = await response.text();
+                const parts = text.split("|||");
+
+                if (parts.length === 3) {
+                    document.getElementById("follower").textContent = "LATEST FOLLOWER: " + parts[0];
+                    document.getElementById("sub").textContent = "LATEST SUB: " + parts[1];
+                    document.getElementById("cheer").textContent = "LATEST CHEER: " + parts[2];
+                }
+            } catch (e) {
+                console.error("Failed to fetch ticker data", e);
+                document.getElementById("follower").textContent = "LATEST FOLLOWER: UNAVAILABLE";
+                document.getElementById("sub").textContent = "LATEST SUB: UNAVAILABLE";
+                document.getElementById("cheer").textContent = "LATEST CHEER: UNAVAILABLE";
+            }
+        }
+
+        updateTicker();
+        setInterval(updateTicker, 5000);
+    </script>
+</body>
+</html>
